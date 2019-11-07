@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import ItemCard from './ItemCard';
@@ -14,7 +15,10 @@ class ItemsList extends React.Component {
                 {items && items.map(function(item) {
                     item.id = item.key;
                     return (
-                        <ItemCard todoList={todoList} item={item} />
+                        <Link to={'/todoList/' + todoList.id + '/todoItem/' + item.id} key={item.key}>
+                            <ItemCard todoList={todoList} item={item} key={item.key} />
+                        </Link>
+                        
                     );})
                 }
             </div>
