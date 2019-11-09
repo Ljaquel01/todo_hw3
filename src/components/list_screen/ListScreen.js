@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import ItemsList from './ItemsList.js'
 import { firestoreConnect } from 'react-redux-firebase';
-import { fieldChangeHandler, newItemHandler } from '../../store/database/asynchHandler'
+import { fieldChangeHandler} from '../../store/database/asynchHandler'
 
 class ListScreen extends Component {
     state = {
@@ -30,14 +30,11 @@ class ListScreen extends Component {
         this.handleChange(e)
     }
 
-    idGenerator() {
-        return '_' + Math.random().toString(36).substr(2, 9);
-    };
-
     addItem = (e) => {
-        const newKey = this.idGenerator()
-        const item = {id: newKey, key: newKey, description: "", assigned_to: "", due_date: "", completed: ""}
+        //const newKey = this.idGenerator()
+        //const item = {id: newKey, key: newKey, description: "", assigned_to: "", due_date: "", completed: ""}
         //this.props.newItem(this.props.todoList, item)
+        this.props.history.push('/todoList/' + this.props.todoList.id +'/todoItem')
     }
 
     render() {
@@ -85,7 +82,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => ({
     fieldChange: (value, bool, todoList) => dispatch(fieldChangeHandler(value, bool, todoList)),
-    newItem: (todoList, item) => dispatch(newItemHandler(todoList, item))
 });
 
 export default compose(

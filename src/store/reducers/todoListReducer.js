@@ -20,11 +20,9 @@ const todoListReducer = (state = initState, action) => {
                 ...state,
                 owner: action.name,
             }
-        case "NEW_ITEM":
+        case "SUBMIT_NEW_ITEM":
             return state;
-        case "CHANGE_ITEM":
-            return state;
-        case "CANCEL_ITEM":
+        case "SUBMIT_ITEM":
             return state;
         default:
             return state;

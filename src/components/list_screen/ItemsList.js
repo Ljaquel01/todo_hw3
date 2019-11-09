@@ -14,10 +14,7 @@ class ItemsList extends React.Component {
         return (
             <div className="todo-lists section">
                 {items && items.map(item => (
-                    <NavLink to={{
-                        pathname: '/todoList/'+ todoList.id + '/todoItem/' + item.key,
-                        state: {isNew: false}
-                    }} key={item.key}>
+                    <NavLink to={'/todoList/'+ todoList.id + '/todoItem/' + item.key} key={item.key}>
                         <ItemCard todoList={todoList} item={item}/>
                     </NavLink>     
                 ))}

@@ -60,28 +60,41 @@ export const fieldChangeHandler = (value, bool, todoList) => (dispatch, getState
   }
 };
 
-export const newItemHandler = (todoList, item) => (dispatch, getState, { getFirestore }) => {
-  const itemCollection = todoList.items 
-  itemCollection.push(item)
+const getIndex = (list, key) => {
+  for (let i = 0; i < list.length; i++) { 
+    if (list[i].key === key) { return i }
+  }
+  return -1
+};
+
+export const submitItemHandler = (todoList, item, newItem) => (dispatch, getState, { getFirestore }) => {
+  const items = todoList.items
+  const index = getIndex(items, item.key)
+  const { description, assigned_to, due_date, completed} = newItem
+  items[index].description = description
+  items[index].assigned_to = assigned_to
+  items[index].due_date = due_date
+  items[index].completed = completed
   const firestore = getFirestore();
-  firestore.collection('todoLists').doc(todoList.id).update({items: itemCollection})
+  firestore.collection('todoLists').doc(todoList.id).update({items: items})
   .then(() => {
-    dispatch(actionCreators.newItem(item))
+    dispatch(actionCreators.submitItem(newItem))
   })
 };
 
-export const changeItemHandler = () => (dispatch, getState, { getFirestore }) => {
-  
+const idGenerator = () => {
+  return '_' + Math.random().toString(36).substr(2, 9);
 };
 
-export const cancelItemHandler = (backup, todoList) => (dispatch, getState, { getFirestore }) => {
-  const itemCollection = todoList.items 
-  itemCollection.filter((item)=> {
-    return item.key != backup.key
-  })
+export const submitNewItemHandler = (todoList, newItem) => (dispatch, getState, { getFirestore }) => {
+  const items = todoList.items
+  const id = idGenerator()
+  newItem.id = id
+  newItem.key = id
+  items.push(newItem)
   const firestore = getFirestore();
-  firestore.collection('todoLists').doc(todoList.id).update({items: itemCollection})
+  firestore.collection('todoLists').doc(todoList.id).update({items: items})
   .then(() => {
-    dispatch(actionCreators.cancelItem(backup))
+    dispatch(actionCreators.submitNewItem(newItem))
   })
 };

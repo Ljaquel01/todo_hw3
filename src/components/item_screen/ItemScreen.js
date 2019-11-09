@@ -3,61 +3,59 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { cancelItemHandler, changeItemHandler } from '../../store/database/asynchHandler';
+import { submitItemHandler, submitNewItemHandler } from '../../store/database/asynchHandler';
 
 class ItemScreen extends Component {
     
     state = {
-        description: '',
-        assigned_to: '',
-        due_date: '',
-        completed: false,
+        description: this.props.item ? this.props.item.description : "",
+        assigned_to: this.props.item ? this.props.item.assigned_to : "",
+        due_date: this.props.item ? this.props.item.due_date : "",
+        completed: this.props.item ? this.props.item.completed : false,
     }
 
     handleChange = (e) => {
         e.preventDefault()
-        //let newItem = item
-        const { name, value } = e.target;
-        //if(name === "description") { newItem.description = value}
-        //else if(name === "assigned_to") { newItem.assigned_to = value}
-        //else if(name === "complete") { newItem.completed = value}
-        //else if(name === "due_date") { newItem.due_date = value}
-        
-        //this.props.changeHandler();
+        this.setState({
+            [e.target.name]: e.target.value
+        })
     }
 
     handleSubmit = (e) => {
-
+        e.preventDefault()
+        this.props.submitItem(this.props.todoList, this.props.item, this.state)
+        this.props.history.push('/todoList/' + this.props.todoList.id)
     }
 
-    handleCancel = (backup, todoList) => {
-        
+    handleNewSubmit = (e) => {
+        e.preventDefault()
+        this.props.submitNewItem(this.props.todoList, this.state)
+        this.props.history.push('/todoList/' + this.props.todoList.id)
     }
 
-    handleNewCancel = (e) => {
-
+    handleCancel = () => {
+        this.props.history.push('/todoList/' + this.props.todoList.id)
     }
 
     render() {
-        const { auth, todoList, item, isNew} = this.props
-        if(!auth.uid || !todoList || !item) { return <Redirect to="/" />; }
-        const { description, assigned_to, due_date, completed } = item
-        let backup = item;
-        let handleS = this.handleSubmit
-        let handleC = isNew ? this.handleNewCancel : this.handleCancel.bind(backup, todoList, item)
+        const { auth, todoList, item } = this.props
+        if(!auth.uid || !todoList ) { return <Redirect to="/" />; }
+
+        let handleS = item ? this.handleSubmit : this.handleNewSubmit
+        let handleC = this.handleCancel
         
         return (
             <div className="container white">
                 <h3>Item</h3>
                 <div>
                     <div>Description:</div>
-                    <input name = "description" type="input" value={description} onChange={this.handleChange} />
+                    <input name = "description" type="input" value={this.state.description} onChange={this.handleChange} />
                     <div>Assigned To:</div>
-                    <input name = "assigned_to" type="input" value={assigned_to} onChange={this.handleChange} />
+                    <input name = "assigned_to" type="input" value={this.state.assigned_to} onChange={this.handleChange} />
                     <div>Due Date:</div>
-                    <input name = "due_date" type="date" value={due_date} onChange={this.handleChange} />
+                    <input name = "due_date" type="date" value={this.state.due_date} onChange={this.handleChange} />
                     <div>Completed:</div>
-                    <input name = "completed" type="checkbox" checked={completed} onChange={this.handleChange} />
+                    <input name = "completed" type="checkbox" checked={this.state.completed} onChange={this.handleChange} />
                 </div>
                 <button onClick={handleS}>Submit</button>
                 <button onClick={handleC}>Cancel</button>
@@ -68,28 +66,26 @@ class ItemScreen extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     const { id, iid } = ownProps.match.params;
-    const { isNew } = ownProps.location.state;
     const { todoLists } = state.firestore.data;
     const todoList = todoLists ? todoLists[id] : null;
     if(!todoLists) {
-        return { todoList: null, item: null, auth: state.firebase.auth, isNew }
+        return { todoList: null, item: null, auth: state.firebase.auth}
     }
     todoList.id = id;
-    const item = todoList.items ? todoList.items[iid] : null 
+    const item = todoList.items ? iid ? todoList.items[iid] : null : null 
     if(!item) {
-        return { todoList: null, item: null, auth: state.firebase.auth, isNew }
+        return { todoList: todoList, item: null, auth: state.firebase.auth}
     }
     return {
       todoList,
       item,
-      auth: state.firebase.auth,
-      isNew
+      auth: state.firebase.auth
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    cancelItem: (backup, todoList) => dispatch(cancelItemHandler(backup, todoList)),
-    changeHandler: () => dispatch(changeItemHandler())
+    submitItem: (todoList, item, newItem) => dispatch(submitItemHandler(todoList, item, newItem)),
+    submitNewItem: (todoList, newItem) => dispatch(submitNewItemHandler(todoList, newItem))
 })
 
 export default compose(
