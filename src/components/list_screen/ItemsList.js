@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import ItemCard from './ItemCard';
@@ -9,7 +9,7 @@ class ItemsList extends React.Component {
     render() {
         const todoList = this.props.todoList;
         const items = todoList.items;
-        console.log("ItemsList: todoList.id " + todoList.id);
+        //console.log("ItemsList: todoList.id " + todoList.id);
         items.map(item => ( item.id = item.key ))
         return (
             <div className="todo-lists section">

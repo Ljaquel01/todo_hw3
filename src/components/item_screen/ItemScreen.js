@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { submitItemHandler, submitNewItemHandler } from '../../store/database/asynchHandler';
+import { submitItemHandler, submitNewItemHandler, getIndex } from '../../store/database/asynchHandler';
 
 class ItemScreen extends Component {
     
@@ -33,7 +33,7 @@ class ItemScreen extends Component {
         this.props.history.push('/todoList/' + this.props.todoList.id)
     }
 
-    handleCancel = () => {
+    handleCancel = (e) => {
         this.props.history.push('/todoList/' + this.props.todoList.id)
     }
 
@@ -72,7 +72,9 @@ const mapStateToProps = (state, ownProps) => {
         return { todoList: null, item: null, auth: state.firebase.auth}
     }
     todoList.id = id;
-    const item = todoList.items ? iid ? todoList.items[iid] : null : null 
+    let i = -1
+    if(iid && todoList.items) { i = getIndex(todoList.items, iid) }
+    const item = todoList.items ? iid ? todoList.items[i] : null : null 
     if(!item) {
         return { todoList: todoList, item: null, auth: state.firebase.auth}
     }

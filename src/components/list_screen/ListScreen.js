@@ -31,9 +31,6 @@ class ListScreen extends Component {
     }
 
     addItem = (e) => {
-        //const newKey = this.idGenerator()
-        //const item = {id: newKey, key: newKey, description: "", assigned_to: "", due_date: "", completed: ""}
-        //this.props.newItem(this.props.todoList, item)
         this.props.history.push('/todoList/' + this.props.todoList.id +'/todoItem')
     }
 

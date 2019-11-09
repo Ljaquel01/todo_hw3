@@ -60,7 +60,7 @@ export const fieldChangeHandler = (value, bool, todoList) => (dispatch, getState
   }
 };
 
-const getIndex = (list, key) => {
+export const getIndex = (list, key) => {
   for (let i = 0; i < list.length; i++) { 
     if (list[i].key === key) { return i }
   }
@@ -82,7 +82,7 @@ export const submitItemHandler = (todoList, item, newItem) => (dispatch, getStat
   })
 };
 
-const idGenerator = () => {
+export const idGenerator = () => {
   return '_' + Math.random().toString(36).substr(2, 9);
 };
 
