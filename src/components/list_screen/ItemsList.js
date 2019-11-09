@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import ItemCard from './ItemCard';
@@ -10,17 +10,17 @@ class ItemsList extends React.Component {
         const todoList = this.props.todoList;
         const items = todoList.items;
         console.log("ItemsList: todoList.id " + todoList.id);
+        items.map(item => ( item.id = item.key ))
         return (
             <div className="todo-lists section">
-                {items && items.map(function(item) {
-                    item.id = item.key;
-                    return (
-                        <Link to={'/todoList/' + todoList.id + '/todoItem/' + item.id} key={item.key}>
-                            <ItemCard todoList={todoList} item={item} key={item.key} />
-                        </Link>
-                        
-                    );})
-                }
+                {items && items.map(item => (
+                    <NavLink to={{
+                        pathname: '/todoList/'+ todoList.id + '/todoItem/' + item.key,
+                        state: {isNew: false}
+                    }} key={item.key}>
+                        <ItemCard todoList={todoList} item={item}/>
+                    </NavLink>     
+                ))}
             </div>
         );
     }

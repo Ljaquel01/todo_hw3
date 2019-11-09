@@ -5,7 +5,6 @@ export const loginHandler = ({ credentials, firebase }) => (dispatch, getState) 
       credentials.email,
       credentials.password,
     ).then(() => {
-      console.log("LOGIN_SUCCESS");
       dispatch({ type: 'LOGIN_SUCCESS' });
     }).catch((err) => {
       dispatch({ type: 'LOGIN_ERROR', err });
@@ -41,7 +40,6 @@ export const createTodoListHandler = (todoList) => (dispatch, getState, { getFir
     }).then((todoList) => {
       dispatch(actionCreators.createTodoList(todoList));
     }).catch((err) => {
-      console.log(err)
       dispatch(actionCreators.createTodoListError(err));
     })
 };
@@ -60,4 +58,30 @@ export const fieldChangeHandler = (value, bool, todoList) => (dispatch, getState
       dispatch(actionCreators.ownerChange(value))
     })
   }
+};
+
+export const newItemHandler = (todoList, item) => (dispatch, getState, { getFirestore }) => {
+  const itemCollection = todoList.items 
+  itemCollection.push(item)
+  const firestore = getFirestore();
+  firestore.collection('todoLists').doc(todoList.id).update({items: itemCollection})
+  .then(() => {
+    dispatch(actionCreators.newItem(item))
+  })
+};
+
+export const changeItemHandler = () => (dispatch, getState, { getFirestore }) => {
+  
+};
+
+export const cancelItemHandler = (backup, todoList) => (dispatch, getState, { getFirestore }) => {
+  const itemCollection = todoList.items 
+  itemCollection.filter((item)=> {
+    return item.key != backup.key
+  })
+  const firestore = getFirestore();
+  firestore.collection('todoLists').doc(todoList.id).update({items: itemCollection})
+  .then(() => {
+    dispatch(actionCreators.cancelItem(backup))
+  })
 };

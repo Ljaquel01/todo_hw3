@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import ItemsList from './ItemsList.js'
 import { firestoreConnect } from 'react-redux-firebase';
-import { fieldChangeHandler } from '../../store/database/asynchHandler'
+import { fieldChangeHandler, newItemHandler } from '../../store/database/asynchHandler'
 
 class ListScreen extends Component {
     state = {
@@ -30,13 +30,22 @@ class ListScreen extends Component {
         this.handleChange(e)
     }
 
+    idGenerator() {
+        return '_' + Math.random().toString(36).substr(2, 9);
+    };
+
+    addItem = (e) => {
+        const newKey = this.idGenerator()
+        const item = {id: newKey, key: newKey, description: "", assigned_to: "", due_date: "", completed: ""}
+        //this.props.newItem(this.props.todoList, item)
+    }
+
     render() {
         const auth = this.props.auth;
         const todoList = this.props.todoList;
-        if (!auth.uid) {
+        if (!auth.uid || !todoList) {
             return <Redirect to="/" />;
         }
-
         return (
             <div className="container white">
                 <h5 className="grey-text text-darken-3">Todo List</h5>
@@ -49,6 +58,9 @@ class ListScreen extends Component {
                     <input className="active" type="text" name="owner" id="owner" onChange={this.handleChange} onBlur={this.handleOnBlur} value={todoList.owner} />
                 </div>
                 <ItemsList todoList={todoList} />
+                <button onClick={this.addItem} id={todoList.id}> 
+                    &#x2b; 
+                </button>
             </div>
         );
     }
@@ -58,9 +70,13 @@ const mapStateToProps = (state, ownProps) => {
   const { id } = ownProps.match.params;
   const { todoLists } = state.firestore.data;
   const todoList = todoLists ? todoLists[id] : null;
+  if(!todoLists) {
+    return {
+        todoList: null,
+        auth: state.firebase.auth
+    }
+  }
   todoList.id = id;
-  console.log(todoLists)
-
   return {
     todoList,
     auth: state.firebase.auth,
@@ -69,6 +85,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => ({
     fieldChange: (value, bool, todoList) => dispatch(fieldChangeHandler(value, bool, todoList)),
+    newItem: (todoList, item) => dispatch(newItemHandler(todoList, item))
 });
 
 export default compose(

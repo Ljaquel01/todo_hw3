@@ -15,6 +15,9 @@ export const CREATE_TODO_LIST = 'CREATE_TODO_LIST';
 export const CREATE_TODO_LIST_ERROR = 'CREATE_TODO_LIST_ERROR';
 export const NAME_CHANGE = 'NAME_CHANGE';
 export const OWNER_CHANGE = 'OWNER_CHANGE';
+export const NEW_ITEM = 'NEW_ITEM';
+export const CANCEL_ITEM = 'CANCEL_ITEM';
+export const CHANGE_ITEM = 'CHANGE_ITEM';
 
 // THESE CREATORS MAKE ACTIONS ASSOCIATED WITH USER ACCOUNTS
 
@@ -46,4 +49,13 @@ export function nameChange(value) {
 }
 export function ownerChange(value) {
     return { type: OWNER_CHANGE, value }
+}
+export function newItem(item) {
+    return { type: NEW_ITEM, item}
+}
+export function cancelItem(item) {
+    return { type: CANCEL_ITEM, item}
+}
+export function changeItem() {
+    return { type: CHANGE_ITEM}
 }
