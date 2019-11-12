@@ -5,9 +5,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100%;
@@ -15,14 +13,23 @@ body {
 
 body {
   position: absolute;
-  width: 80%;
-  left: 10%;
+  width: 82%;
+  left: 9%;
   top: 5%;
 }
 
 div.banner {
   padding: 20px;
-  margin-top: 60px;
+  margin-top: 20px;
+}
+
+div.container {
+  width: 82%;
+  left: 9%;
+}
+
+div.row {
+  margin-bottom: 1px;
 }
 
 form {
@@ -38,7 +45,7 @@ input[type=text]:not(.browser-default):focus:not([readonly]),
 input[type=email]:not(.browser-default):focus:not([readonly]),
 input[type=password]:not(.browser-default):focus:not([readonly]),
 textarea.materialize-textarea:focus:not([readonly]){
-  border-color: #ec407a;
+  border-color: #76ff03;
   box-shadow: none;
 }
 
@@ -46,5 +53,64 @@ input[type=text]:not(.browser-default):focus:not([readonly]) + label,
 textarea.materialize-textarea:focus:not([readonly]) + label,
 input[type=email]:not(.browser-default):focus:not([readonly]) + label,
 input[type=password]:not(.browser-default):focus:not([readonly]) + label{
-  color: #ec407a !important;
+  color: #76ff03 !important;
+}
+
+#todo-item-link {
+  height: 75px;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+#todo-item-link-content {
+  padding-top: 5px;
+}
+
+.field {
+  text-align: center;
+  font-size: 12pt;
+  margin-top: 20px;
+}
+
+.item_header { 
+  height: 60px;
+}
+
+.item-button {
+  font-size: 13pt;
+  margin: 4px;
+  padding: 3px 10px 3px 10px;
+  font-weight: 600;
+}
+
+.item-field {
+  font-size: 13pt;
+}
+
+.add-item {
+  border-color: #e8f5e9;
+  border-width: 0px;
+  border-style: solid;
+  border-radius: 6px;
+  width: 98%;
+  height: 70px;
+  padding: 2px;
+  margin: 1%;
+}
+
+.add-item-container {
+  border-color: #00e676;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 6px;
+  width: 100%;
+  height: 100%;
+  font-size: 45px;
+  padding-top: 8px;
+  cursor: pointer;
+  color: #00e676;
+}
+
+.add-item-container:hover {
+  background-color: #424242;
 }

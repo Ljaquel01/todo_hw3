@@ -18,6 +18,7 @@ export const OWNER_CHANGE = 'OWNER_CHANGE';
 export const SUBMIT_NEW_ITEM = 'SUBMIT_NEW_ITEM';
 export const CANCEL_ITEM = 'CANCEL_ITEM';
 export const SUBMIT_ITEM = 'SUBMIT_ITEM';
+export const DELETE_LIST = 'DELETE_LIST';
 
 // THESE CREATORS MAKE ACTIONS ASSOCIATED WITH USER ACCOUNTS
 
@@ -55,4 +56,7 @@ export function submitItem(item) {
 }
 export function submitNewItem(item) {
     return { type: SUBMIT_NEW_ITEM, item}
+}
+export function deleteList(todoList) {
+    return { type: DELETE_LIST, todoList}
 }

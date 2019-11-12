@@ -62,7 +62,7 @@ export const fieldChangeHandler = (value, bool, todoList) => (dispatch, getState
 
 export const getIndex = (list, key) => {
   for (let i = 0; i < list.length; i++) { 
-    if (list[i].key === key) { return i }
+    if (list[i].key.toString() === key.toString()) { return i }
   }
   return -1
 };
@@ -98,3 +98,12 @@ export const submitNewItemHandler = (todoList, newItem) => (dispatch, getState, 
     dispatch(actionCreators.submitNewItem(newItem))
   })
 };
+
+export const deleteListHandler = (todoList) => (dispatch, getState, { getFirestore }) => {
+  const { id } = todoList
+  const firestore = getFirestore()
+  firestore.collection('todoLists').doc(id).delete()
+  .then(() => {
+    dispatch(actionCreators.deleteList(todoList))
+  })
+}

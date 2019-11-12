@@ -4,10 +4,9 @@ class TodoListCard extends React.Component {
 
     render() {
         const { todoList } = this.props;
-        //console.log("TodoListCard, todoList.id: " + todoList.id);
         return (
-            <div className="card z-depth-0 todo-list-link">
-                <div className="card-content grey-text text-darken-3">
+            <div className="card z-depth-1 todo-list-link green lighten-5">
+                <div className="card-content grey-text text-darken-4">
                     <span className="card-title">{todoList.name}</span>
                 </div>
             </div>

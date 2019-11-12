@@ -16,6 +16,11 @@ class ItemScreen extends Component {
 
     handleChange = (e) => {
         e.preventDefault()
+        let c = this.state.completed
+        if(e.target.name === "completed") {
+            this.setState({completed: !c});
+            return;
+        }
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -45,20 +50,28 @@ class ItemScreen extends Component {
         let handleC = this.handleCancel
         
         return (
-            <div className="container white">
+            <div className="container green lighten-5">
                 <h3>Item</h3>
-                <div>
-                    <div>Description:</div>
-                    <input name = "description" type="input" value={this.state.description} onChange={this.handleChange} />
-                    <div>Assigned To:</div>
-                    <input name = "assigned_to" type="input" value={this.state.assigned_to} onChange={this.handleChange} />
-                    <div>Due Date:</div>
-                    <input name = "due_date" type="date" value={this.state.due_date} onChange={this.handleChange} />
-                    <div>Completed:</div>
-                    <input name = "completed" type="checkbox" checked={this.state.completed} onChange={this.handleChange} />
+                <div className="item-field">
+                    <div className="row">
+                        <div className="col s2">Description:</div>
+                        <input className="col s8 blue-grey lighten-5" name = "description" type="input" value={this.state.description} onChange={this.handleChange} />
+                    </div>
+                    <div className="row">
+                        <div className="col s2">Assigned To:</div>
+                        <input className="col s8 blue-grey lighten-5" name = "assigned_to" type="input" value={this.state.assigned_to} onChange={this.handleChange} />
+                    </div>
+                    <div className="row">
+                        <div className="col s2">Due Date:</div>
+                        <input className="col s8 blue-grey lighten-5 date" name = "due_date" type="date" value={this.state.due_date} onChange={this.handleChange} />
+                    </div>
+                    <div className="row">
+                        <div className="col s2">Completed: </div>
+                        <button className="col s1" name="completed" onClick={this.handleChange}>{this.state.completed ? "true" : "false"}</button>
+                    </div>    
                 </div>
-                <button onClick={handleS}>Submit</button>
-                <button onClick={handleC}>Cancel</button>
+                <button className="green accent-3 black-text item-button" onClick={handleS}>Submit</button>
+                <button className="grey darken-3 white-text item-button" onClick={handleC}>Cancel</button>
             </div>
         );
     }
