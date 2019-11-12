@@ -15,14 +15,6 @@ const ItemSortCriteria = {
 }
 
 class ItemsList extends React.Component {
-    state = {
-        order: ''
-    }
-
-    sortTasks(newOrder) {
-        this.setState({order: newOrder});
-    }
-
     compare = (item1, item2) => {
         let current = this.props.order;
         if (current === ItemSortCriteria.SORT_BY_TASK_DECREASING
@@ -67,7 +59,6 @@ class ItemsList extends React.Component {
     render() {
         const { todoList, order } = this.props;
         const items = todoList.items;
-        if(order !== this.state.order) { this.sortTasks(order);}
         if(order !== '') { items.sort(this.compare); }
         items.map(item => ( item.id = item.key ))
         return (

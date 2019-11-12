@@ -26,6 +26,8 @@ const todoListReducer = (state = initState, action) => {
             return state;
         case "DELETE_LIST":
             return state;
+        case "SORT_ITEMS":
+            return state;
         default:
             return state;
     }

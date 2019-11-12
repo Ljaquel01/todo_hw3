@@ -107,3 +107,25 @@ export const deleteListHandler = (todoList) => (dispatch, getState, { getFiresto
     dispatch(actionCreators.deleteList(todoList))
   })
 }
+
+export const sortingHandler = (todoList, newOrder) => (dispatch, getState, { getFirestore }) => {
+  
+  const { order, id } = todoList
+  const firestore = getFirestore()
+  if(order !== null && order !== undefined) {
+    firestore.collection('todoLists').doc(id).update({ order: newOrder })
+    .then(() => {
+      dispatch(actionCreators.sortItems(todoList))
+    })
+  }
+  else {
+    firestore.collection('todoLists').doc(id).update({ 
+      name: todoList.name,
+      owner: todoList.owner,
+      items: todoList.items,
+      order: newOrder })
+    .then(() => {
+      dispatch(actionCreators.sortItems(todoList))
+    })
+  }
+}

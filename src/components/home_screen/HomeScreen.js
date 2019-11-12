@@ -10,7 +10,7 @@ class HomeScreen extends Component {
 
     handleNewList = (e) => {
         e.preventDefault();
-        const newTodoList = {name: "Unknown", owner: "", items:[]}
+        const newTodoList = {name: "Unknown", owner: "", items:[], order: ''}
         this.props.createTodoList(newTodoList)
     }
 

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import ItemsList from './ItemsList.js'
 import { firestoreConnect } from 'react-redux-firebase';
-import { fieldChangeHandler, deleteListHandler} from '../../store/database/asynchHandler'
+import { fieldChangeHandler, deleteListHandler, sortingHandler} from '../../store/database/asynchHandler'
 
 const ItemSortCriteria = {
     SORT_BY_TASK_DECREASING: "SORT_BY_TASK_DECREASING",
@@ -19,7 +19,6 @@ class ListScreen extends Component {
     state = {
         name: '',
         owner: '',
-        order: ''
     }
 
     constructor() {
@@ -61,27 +60,27 @@ class ListScreen extends Component {
     }
 
     sortItemsByTask = (e) => {
-      if (this.state.order === (ItemSortCriteria.SORT_BY_TASK_INCREASING)) {
-          this.setState({order: ItemSortCriteria.SORT_BY_TASK_DECREASING});
+      if (this.props.todoList.order === (ItemSortCriteria.SORT_BY_TASK_INCREASING)) {
+          this.props.handleSort(this.props.todoList, ItemSortCriteria.SORT_BY_TASK_DECREASING)
       }
-      else { this.setState({order: ItemSortCriteria.SORT_BY_TASK_INCREASING}); }
+      else { this.props.handleSort(this.props.todoList, ItemSortCriteria.SORT_BY_TASK_INCREASING) }
     }
   
     sortItemsByDueDate = (e) => {
-        if (this.state.order === (ItemSortCriteria.SORT_BY_DUE_DATE_INCREASING)) {
-            this.setState({order: ItemSortCriteria.SORT_BY_DUE_DATE_DECREASING});
+        if (this.props.todoList.order === (ItemSortCriteria.SORT_BY_DUE_DATE_INCREASING)) {
+            this.props.handleSort(this.props.todoList, ItemSortCriteria.SORT_BY_DUE_DATE_DECREASING);
         }
         else {
-            this.setState({order: ItemSortCriteria.SORT_BY_DUE_DATE_INCREASING});
+            this.props.handleSort(this.props.todoList, ItemSortCriteria.SORT_BY_DUE_DATE_INCREASING);
         }
     }
   
     sortItemsByStatus = (e) => {
-        if (this.state.order === (ItemSortCriteria.SORT_BY_STATUS_INCREASING)) {
-            this.setState({order: ItemSortCriteria.SORT_BY_STATUS_DECREASING});
+        if (this.props.todoList.order === (ItemSortCriteria.SORT_BY_STATUS_INCREASING)) {
+            this.props.handleSort(this.props.todoList, ItemSortCriteria.SORT_BY_STATUS_DECREASING);
         }
         else {
-            this.setState({order: ItemSortCriteria.SORT_BY_STATUS_INCREASING});
+            this.props.handleSort(this.props.todoList, ItemSortCriteria.SORT_BY_STATUS_INCREASING);
         }
     }
 
@@ -115,7 +114,7 @@ class ListScreen extends Component {
                     <button className="btn-flat col s2 offset-s1 item_header hoverable" onClick={this.sortItemsByDueDate}>Due Date</button>
                     <button className="btn-flat col s2 item_header hoverable" onClick={this.sortItemsByStatus}>Status</button>
                 </div>
-                <ItemsList todoList={todoList} order={this.state.order}/>
+                <ItemsList todoList={todoList} order={todoList.order ? todoList.order : ''}/>
                 <button className="add-item grey darken-3 material-icons z-depth-2 hoverable" onClick={this.addItem} id={todoList.id}> 
                     <i className="material-icons add-item-container">add_circle_outline</i> 
                 </button>
@@ -154,7 +153,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => ({
     fieldChange: (value, bool, todoList) => dispatch(fieldChangeHandler(value, bool, todoList)),
-    deleteHandler: (todoList) => dispatch(deleteListHandler(todoList))
+    deleteHandler: (todoList) => dispatch(deleteListHandler(todoList)),
+    handleSort: (todoList, order) => dispatch(sortingHandler(todoList, order)),
 });
 
 export default compose(
