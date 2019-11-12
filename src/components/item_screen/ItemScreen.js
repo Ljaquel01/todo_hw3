@@ -50,7 +50,7 @@ class ItemScreen extends Component {
         let handleC = this.handleCancel
         
         return (
-            <div className="container green lighten-5">
+            <div className="container green lighten-5 item-screen">
                 <h3>Item</h3>
                 <div className="item-field">
                     <div className="row">

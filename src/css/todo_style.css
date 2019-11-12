@@ -42,13 +42,18 @@ div.banner {
   border-radius: 7px;
   background-image: linear-gradient(to bottom,         
   #1f7017, #1f7017);
-  margin-top: 12px;
   width: 100%;
   padding-top: 10px;
   padding-bottom: 10px;
 }
+.home_new_list_container {
+  padding-top: 12px;
+}
 .home_new_list_button:hover {
-  box-shadow: 1px 2px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  border-right-width: 0px;
+  border-top-color: #1f7017;
 }
 .todo-list-link {
   border-width: 1px;
@@ -75,13 +80,14 @@ div.banner {
   height: 45px;
   width: 55px;
   color: white;
-  font-size: 20px;
+  font-size: 32px;
   align-content: center;
   padding-top: 40px;
   border-radius: 4px;
   margin: 4px;
+  background-color: #424242;
 }
 .trash:hover{
-  background-color: #424242;
+  background-color: #616161;
   cursor: pointer;
 }

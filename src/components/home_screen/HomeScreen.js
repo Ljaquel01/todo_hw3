@@ -26,16 +26,18 @@ class HomeScreen extends Component {
                         <TodoListLinks />
                     </div>
 
-                    <div className="col s8">
-                        <div className="banner">
+                    <div className="col s8 banners">
+                        <div id="banner" className="banner">
                             @todo<br />
                             List Manager
                         </div>
                         
                         <div className="home_new_list_container">
-                            <button className="home_new_list_button white-text" onClick={this.handleNewList}>
-                                Create New List
-                            </button>
+                            <div>
+                                <button className="home_new_list_button white-text hoverable z-depth-1" onClick={this.handleNewList}>
+                                    Create New List
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

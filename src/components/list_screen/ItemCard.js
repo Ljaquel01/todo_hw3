@@ -8,7 +8,7 @@ class ItemCard extends React.Component {
             compl = <div className="col s2 field completed red-text">Pending</div>
         }
         return (
-            <div id="todo-item-link" className="card z-depth-1 todo-list-link teal lighten-5">
+            <div id="todo-item-link" className="card z-depth-1 todo-list-link teal lighten-5 hoverable">
                 <div className="divider"></div>
                 <div id="todo-item-link-content" className="grey-text text-darken-4 row">
                     <div className="col s4 row truncate">

@@ -62,7 +62,7 @@ class LoginScreen extends Component {
             </div>
           </form>
 
-          <div className="col s8 banner">
+          <div id="banner-login" className="col s8 banner">
             @todo<br />
             List Manager
           </div>

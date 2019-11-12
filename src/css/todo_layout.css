@@ -19,8 +19,14 @@ body {
 }
 
 div.banner {
-  padding: 20px;
+  padding: 0 .75rem;
   margin-top: 20px;
+}
+
+#banner{
+  padding-left: 1%;
+  padding-top: 2.5%;
+  padding-bottom: 2.5%;
 }
 
 div.container {
@@ -45,7 +51,7 @@ input[type=text]:not(.browser-default):focus:not([readonly]),
 input[type=email]:not(.browser-default):focus:not([readonly]),
 input[type=password]:not(.browser-default):focus:not([readonly]),
 textarea.materialize-textarea:focus:not([readonly]){
-  border-color: #76ff03;
+  border-color: #00e676;
   box-shadow: none;
 }
 
@@ -53,7 +59,7 @@ input[type=text]:not(.browser-default):focus:not([readonly]) + label,
 textarea.materialize-textarea:focus:not([readonly]) + label,
 input[type=email]:not(.browser-default):focus:not([readonly]) + label,
 input[type=password]:not(.browser-default):focus:not([readonly]) + label{
-  color: #76ff03 !important;
+  color: #00e676 !important;
 }
 
 #todo-item-link {
@@ -66,10 +72,20 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   padding-top: 5px;
 }
 
+#banner-login {
+  margin-top: 60px;
+}
+
 .field {
   text-align: center;
   font-size: 12pt;
   margin-top: 20px;
+}
+
+.item-screen {
+  border-radius: 5px;
+  padding-left: 10px;
+  padding-bottom: 10px;
 }
 
 .item_header { 
@@ -93,7 +109,7 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   border-style: solid;
   border-radius: 6px;
   width: 98%;
-  height: 70px;
+  height: 50px;
   padding: 2px;
   margin: 1%;
 }
@@ -105,12 +121,30 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   border-radius: 6px;
   width: 100%;
   height: 100%;
-  font-size: 45px;
-  padding-top: 8px;
+  font-size: 42px;
+  padding-top: 0px;
   cursor: pointer;
   color: #00e676;
 }
 
 .add-item-container:hover {
-  background-color: #424242;
+  background-color: #616161;
+}
+
+.banners {
+  padding: 4px;
+}
+
+#modal1 {
+  height: 250px;
+  font-size: 12pt;
+}
+#modal-footer1 {
+  text-align: left;
+}
+#modal-close {
+  margin-left: 6px;
+}
+.modal-close.grey {
+  color: white;
 }
