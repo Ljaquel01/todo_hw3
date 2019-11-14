@@ -10,7 +10,7 @@ class HomeScreen extends Component {
 
     handleNewList = (e) => {
         e.preventDefault();
-        const newTodoList = {name: "Unknown", owner: "", items:[], order: ''}
+        const newTodoList = {name: "Unknown", owner: "", items:[], order: '', lastModified: new Date()}
         this.props.createTodoList(newTodoList)
     }
 
@@ -23,7 +23,7 @@ class HomeScreen extends Component {
             <div className="dashboard container home_box">
                 <div className="row">
                     <div className="col s4 list_links">
-                        <TodoListLinks />
+                        <TodoListLinks todoListss={this.props.todoLists}/>
                     </div>
 
                     <div className="col s8 banners">

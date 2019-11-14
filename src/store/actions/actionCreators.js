@@ -20,6 +20,7 @@ export const CANCEL_ITEM = 'CANCEL_ITEM';
 export const SUBMIT_ITEM = 'SUBMIT_ITEM';
 export const DELETE_LIST = 'DELETE_LIST';
 export const SORT_ITEMS = 'SORT_ITEMS';
+export const UPDATE_TIME = 'UPDATE_TIME';
 
 // THESE CREATORS MAKE ACTIONS ASSOCIATED WITH USER ACCOUNTS
 
@@ -63,4 +64,7 @@ export function deleteList(todoList) {
 }
 export function sortItems(todoList) {
     return { type: SORT_ITEMS, todoList}
+}
+export function updateTime(todoList) {
+    return { type: UPDATE_TIME, todoList}
 }

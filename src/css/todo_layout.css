@@ -91,6 +91,9 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 .item_header { 
   height: 60px;
 }
+.item_header:hover {
+  background-color: #212121;
+}
 
 .item-button {
   font-size: 13pt;
@@ -147,4 +150,9 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 }
 .modal-close.grey {
   color: white;
+}
+
+.FAB {
+  position: absolute;
+  padding: 100px;
 }

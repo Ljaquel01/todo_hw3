@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import ItemsList from './ItemsList.js'
+import ItemsList from './ItemsList.js';
 import { firestoreConnect } from 'react-redux-firebase';
-import { fieldChangeHandler, deleteListHandler, sortingHandler} from '../../store/database/asynchHandler'
+import { fieldChangeHandler, deleteListHandler, sortingHandler, updateTimeHandler} from '../../store/database/asynchHandler'
 
 const ItemSortCriteria = {
     SORT_BY_TASK_DECREASING: "SORT_BY_TASK_DECREASING",
@@ -20,22 +20,21 @@ class ListScreen extends Component {
         name: '',
         owner: '',
     }
-
-    constructor() {
-        super();
-        this.M = window.M; 
-    }
     
     componentDidMount() {
+        if(this.props.todoList) { this.props.updateTime(this.props.todoList) }
         var elems1 = document.querySelectorAll(".modal");
-        var instances = this.M.Modal.init(elems1);
+        window.M.Modal.init(elems1);
+        var elems = document.querySelectorAll('.fixed-action-btn');
+        window.M.FloatingActionButton.init(elems, {
+            direction: 'left'
+        });
     }
 
     handleChange = (e) => {
         const { target } = e;
         let value = target.value;
         this.props.fieldChange(value, true ? target.name === "name" : false, this.props.todoList)
-        
         this.setState(state => ({
         ...state,
         [target.id]: value,
@@ -92,14 +91,14 @@ class ListScreen extends Component {
         }
         return (
             <div className="container green lighten-5 items_list">
-                <div className="row">
+                <div className="row list-screen-header">
                     <h5 className="grey-text text-darken-3 col s4">@TodoList</h5>
                     <div data-target="modal1" 
                         className="trash modal-trigger col offset-s7 hoverable">
                         <i className="material-icons small">delete</i>
                     </div>
                 </div>
-                <div className="row">
+                <div className="row list-screen-fields">
                     <div className="input-field col s6">
                         <label className="active" htmlFor="email">Name</label>
                         <input className="active" type="text" name="name" id="name" onChange={this.handleChange} onBlur={this.handleOnBlur} value={todoList.name} />
@@ -109,10 +108,10 @@ class ListScreen extends Component {
                         <input className="active" type="text" name="owner" id="owner" onChange={this.handleChange} onBlur={this.handleOnBlur} value={todoList.owner} />
                     </div>
                 </div>
-                <div className="row green accent-3">
-                    <button className="btn-flat col s3 item_header hoverable" onClick={this.sortItemsByTask}>Task</button>
-                    <button className="btn-flat col s2 offset-s1 item_header hoverable" onClick={this.sortItemsByDueDate}>Due Date</button>
-                    <button className="btn-flat col s2 item_header hoverable" onClick={this.sortItemsByStatus}>Status</button>
+                <div className="row z-depth-2 list-screen-sorts grey darken-3 hoverable">
+                    <button className="btn-flat col s3 item_header white-text" onClick={this.sortItemsByTask}>Task</button>
+                    <button className="btn-flat col s2 offset-s1 white-text item_header" onClick={this.sortItemsByDueDate}>Due Date</button>
+                    <button className="btn-flat col s2 white-text item_header" onClick={this.sortItemsByStatus}>Status</button>
                 </div>
                 <ItemsList todoList={todoList} order={todoList.order ? todoList.order : ''}/>
                 <button className="add-item grey darken-3 material-icons z-depth-2 hoverable" onClick={this.addItem} id={todoList.id}> 
@@ -124,8 +123,8 @@ class ListScreen extends Component {
                     <p>Are you sure you want to delete this list?</p>
                   </div>
                   <div id="modal-footer1" className="modal-footer">
-                    <a id="modal-close"onClick={this.handleDelete} className="modal-close waves-effect waves-green btn-flat green accent-3">Accept</a>
-                    <a id="modal-close"className="modal-close waves-effect waves-green btn-flat grey darken-3">Cancel</a>
+                    <div id="modal-close" onClick={this.handleDelete} className="modal-close waves-effect waves-green btn-flat green accent-3">Accept</div>
+                    <div id="modal-close" className="modal-close waves-effect waves-green btn-flat grey darken-3">Cancel</div>
                     <p>The list will not be retreivable.</p>
                   </div>
                 </div>
@@ -155,6 +154,7 @@ const mapDispatchToProps = dispatch => ({
     fieldChange: (value, bool, todoList) => dispatch(fieldChangeHandler(value, bool, todoList)),
     deleteHandler: (todoList) => dispatch(deleteListHandler(todoList)),
     handleSort: (todoList, order) => dispatch(sortingHandler(todoList, order)),
+    updateTime: (todoList) => dispatch(updateTimeHandler(todoList))
 });
 
 export default compose(

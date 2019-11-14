@@ -129,3 +129,11 @@ export const sortingHandler = (todoList, newOrder) => (dispatch, getState, { get
     })
   }
 }
+
+export const updateTimeHandler = (todoList) => (dispatch, getState, { getFirestore }) => {
+  const firestore = getFirestore()
+  firestore.collection('todoLists').doc(todoList.id).update({lastModified: new Date()})
+  .then(() => {
+    dispatch(actionCreators.updateTime(todoList))
+  })
+}

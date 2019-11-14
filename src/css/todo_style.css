@@ -91,3 +91,9 @@ div.banner {
   background-color: #616161;
   cursor: pointer;
 }
+
+.list-screen-sorts {
+  border-width: 0px;
+  border-style: solid;
+  border-color: #424242;
+}

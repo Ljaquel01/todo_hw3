@@ -1,4 +1,5 @@
 import React from 'react';
+import FAB from './FAB'
 
 class ItemCard extends React.Component {
     render() {
@@ -17,6 +18,7 @@ class ItemCard extends React.Component {
                     </div>
                     <div className="col s2 field">{item.due_date}</div>
                     {compl}
+                    <FAB onMouseOver={(e) => {e.stopPropagation()}} className="col s4"/>
                 </div>
             </div>
         );

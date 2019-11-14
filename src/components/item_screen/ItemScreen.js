@@ -68,7 +68,7 @@ class ItemScreen extends Component {
                     <div className="row">
                         <div className="col s2">Completed: </div>
                         <button className="col s1" name="completed" onClick={this.handleChange}>{this.state.completed ? "true" : "false"}</button>
-                    </div>    
+                    </div> 
                 </div>
                 <button className="green accent-3 black-text item-button" onClick={handleS}>Submit</button>
                 <button className="grey darken-3 white-text item-button" onClick={handleC}>Cancel</button>
