@@ -21,6 +21,8 @@ export const SUBMIT_ITEM = 'SUBMIT_ITEM';
 export const DELETE_LIST = 'DELETE_LIST';
 export const SORT_ITEMS = 'SORT_ITEMS';
 export const UPDATE_TIME = 'UPDATE_TIME';
+export const DELETE_ITEM = 'DELETE_ITEM';
+export const MOVE_ITEM = 'MOVE_ITEM'
 
 // THESE CREATORS MAKE ACTIONS ASSOCIATED WITH USER ACCOUNTS
 
@@ -64,6 +66,12 @@ export function deleteList(todoList) {
 }
 export function sortItems(todoList) {
     return { type: SORT_ITEMS, todoList}
+}
+export function deleteItem(item) {
+    return { type: DELETE_ITEM, item}
+}
+export function moveItem(items) {
+    return { type: MOVE_ITEM, items}
 }
 export function updateTime(todoList) {
     return { type: UPDATE_TIME, todoList}

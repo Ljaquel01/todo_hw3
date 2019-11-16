@@ -153,6 +153,8 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 }
 
 .FAB {
-  position: absolute;
-  padding: 100px;
+  position: relative;
+  padding: 0px !important;
+  bottom:0%;
+  right: 0%;
 }

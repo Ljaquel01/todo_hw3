@@ -30,6 +30,10 @@ const todoListReducer = (state = initState, action) => {
             return state;
         case "UPDATE_TIME":
             return state;
+        case 'DELETE_ITEM':
+            return state;
+        case 'MOVE_ITEM':
+            return state;
         default:
             return state;
     }

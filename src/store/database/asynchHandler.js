@@ -130,6 +130,35 @@ export const sortingHandler = (todoList, newOrder) => (dispatch, getState, { get
   }
 }
 
+export const deleteItemHandler = (todoList, item) => (dispatch, getState, { getFirestore }) => {
+  const items = todoList.items
+  const index = getIndex(items, item.key)
+  items.splice(index, 1)
+  const firestore = getFirestore();
+  firestore.collection('todoLists').doc(todoList.id).update({items: items})
+  .then(() => {
+    dispatch(actionCreators.deleteItem(item))
+  })
+}
+
+export const moveItemHandler = (todoList, item, name) => (dispatch, getState, { getFirestore }) => {
+  const items = todoList.items
+  const index = getIndex(items, item.key)
+  let dest = index-1
+  if(name === "up") { 
+    [items[dest], items[index]] = [items[index], items[dest]]
+  }
+  else {
+    dest = index+1;
+    [items[index], items[dest]] = [items[dest], items[index]]
+  }
+  const firestore = getFirestore();
+  firestore.collection('todoLists').doc(todoList.id).update({items: items})
+  .then(() => {
+    dispatch(actionCreators.moveItem(item))
+  })
+}
+
 export const updateTimeHandler = (todoList) => (dispatch, getState, { getFirestore }) => {
   const firestore = getFirestore()
   firestore.collection('todoLists').doc(todoList.id).update({lastModified: new Date()})
