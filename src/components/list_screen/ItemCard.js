@@ -46,7 +46,7 @@ class ItemCard extends React.Component {
                     {compl}
                     <div className="col s4 row">
                         <div className="fixed-action-btn FAB col s3 offset-s9">
-                            <div className="btn-floating btn-large green accent-3">
+                            <div onClick={(e) => {e.stopPropagation(); e.preventDefault()}}className="btn-floating btn-large green accent-3">
                                 <i className="large material-icons">menu</i>
                             </div>
                             <ul>

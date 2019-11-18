@@ -1,5 +1,14 @@
 import * as actionCreators from '../actions/actionCreators.js'
 
+export const ItemSortCriteria = {
+  SORT_BY_TASK_DECREASING: "SORT_BY_TASK_DECREASING",
+  SORT_BY_TASK_INCREASING: "SORT_BY_TASK_INCREASING",
+  SORT_BY_DUE_DATE_DECREASING: "SORT_BY_DUE_DATE_DECREASING",
+  SORT_BY_DUE_DATE_INCREASING: "SORT_BY_DUE_DATE_INCREASING",
+  SORT_BY_STATUS_DECREASING: "SORT_BY_STATUS_DECREASING",
+  SORT_BY_STATUS_INCREASING: "SORT_BY_STATUS_INCREASING"
+}
+
 export const loginHandler = ({ credentials, firebase }) => (dispatch, getState) => {
     firebase.auth().signInWithEmailAndPassword(
       credentials.email,
@@ -108,26 +117,72 @@ export const deleteListHandler = (todoList) => (dispatch, getState, { getFiresto
   })
 }
 
+export const comp = (order) => (item1, item2) => {
+  let current = order;
+  if (current === ItemSortCriteria.SORT_BY_TASK_DECREASING
+      || current === ItemSortCriteria.SORT_BY_DUE_DATE_DECREASING
+      || current === ItemSortCriteria.SORT_BY_STATUS_DECREASING) {
+      let temp = item1;
+      item1 = item2;
+      item2 = temp;
+  }
+  if (current === ItemSortCriteria.SORT_BY_TASK_INCREASING
+      || current === ItemSortCriteria.SORT_BY_TASK_DECREASING) {
+      if (item1.description < item2.description)
+          return -1;
+      else if (item1.description > item2.description)
+          return 1;
+      else
+          return 0;
+  }
+  else if (current === ItemSortCriteria.SORT_BY_DUE_DATE_INCREASING
+      || current === ItemSortCriteria.SORT_BY_DUE_DATE_DECREASING) {
+      let dueDate1 = item1.due_date;
+      let dueDate2 = item2.due_date;
+      let date1 = new Date(dueDate1);
+      let date2 = new Date(dueDate2);
+      if (date1 < date2)
+          return -1;
+      else if (date1 > date2)
+          return 1;
+      else
+          return 0;
+  }
+  else {
+      if (item1.completed < item2.completed)
+          return -1;
+      else if (item1.completed > item2.completed)
+          return 1;
+      else
+          return 0;
+  }
+}
+
 export const sortingHandler = (todoList, newOrder) => (dispatch, getState, { getFirestore }) => {
   
-  const { order, id } = todoList
+  const { order, id, items } = todoList
+  let itemss = items
   const firestore = getFirestore()
   if(order !== null && order !== undefined) {
     firestore.collection('todoLists').doc(id).update({ order: newOrder })
     .then(() => {
-      dispatch(actionCreators.sortItems(todoList))
+      itemss.sort(comp(newOrder))
+      firestore.collection('todoLists').doc(id).update({items: itemss})
+      .then(() => {
+        dispatch(actionCreators.sortItems(todoList))
+      })
     })
   }
-  else {
-    firestore.collection('todoLists').doc(id).update({ 
-      name: todoList.name,
-      owner: todoList.owner,
-      items: todoList.items,
-      order: newOrder })
-    .then(() => {
-      dispatch(actionCreators.sortItems(todoList))
-    })
-  }
+  //else {
+  //  firestore.collection('todoLists').doc(id).update({ 
+  //    name: todoList.name,
+  //    owner: todoList.owner,
+  //    items: todoList.items,
+  //    order: newOrder })
+  //  .then(() => {
+  //    dispatch(actionCreators.sortItems(todoList))
+  //  })
+  //}
 }
 
 export const deleteItemHandler = (todoList, item) => (dispatch, getState, { getFirestore }) => {
@@ -155,7 +210,10 @@ export const moveItemHandler = (todoList, item, name) => (dispatch, getState, { 
   const firestore = getFirestore();
   firestore.collection('todoLists').doc(todoList.id).update({items: items})
   .then(() => {
-    dispatch(actionCreators.moveItem(item))
+    firestore.collection('todoLists').doc(todoList.id).update({ order: "" })
+    .then(() => {
+      dispatch(actionCreators.moveItem(item))
+    })
   })
 }
 
