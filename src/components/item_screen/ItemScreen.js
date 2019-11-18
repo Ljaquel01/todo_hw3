@@ -15,10 +15,11 @@ class ItemScreen extends Component {
     }
 
     handleChange = (e) => {
-        e.preventDefault()
         let c = this.state.completed
         if(e.target.name === "completed") {
             this.setState({completed: !c});
+            //if(!c === true) { e.target.checked = true}
+            //else { e.target.checked = false }
             return;
         }
         this.setState({
@@ -66,8 +67,11 @@ class ItemScreen extends Component {
                         <input className="col s8 blue-grey lighten-5 date" name = "due_date" type="date" value={this.state.due_date} onChange={this.handleChange} />
                     </div>
                     <div className="row">
-                        <div className="col s2">Completed: </div>
-                        <button className="col s1" name="completed" onClick={this.handleChange}>{this.state.completed ? "true" : "false"}</button>
+                        <div className="col s2">Completed:</div>
+                        <label>
+                            <input className="filled-in" onChange={this.handleChange} name="completed" type="checkbox" checked={this.state.completed} />
+                            <span></span>
+                        </label>
                     </div> 
                 </div>
                 <button className="green accent-3 black-text item-button" onClick={handleS}>Submit</button>

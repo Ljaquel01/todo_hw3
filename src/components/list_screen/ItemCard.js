@@ -2,16 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { deleteItemHandler, moveItemHandler } from '../../store/database/asynchHandler'
-import instance from './ListScreen'
+
 class ItemCard extends React.Component {
 
     handleMoveItem = (e) => {
+        e.stopPropagation()
+        e.preventDefault()
         const { id } = e.target
         const { item, todoList } = this.props
         this.props.handleMoveItem(todoList, item, id);
     }
 
     handleDeleteItem = (e) => {
+        e.stopPropagation()
+        e.preventDefault()
         const { item, todoList } = this.props
         this.props.handleDeleteItem(todoList, item);
     }
@@ -22,13 +26,13 @@ class ItemCard extends React.Component {
         if(!item.completed) { 
             compl = <div className="col s2 field completed red-text">Pending</div>
         }
-        var up = <li><div onClick={this.handleMoveItem} className="btn-floating grey darken-3"><i id="up" className="material-icons">arrow_upward</i></div></li>
-        var down = <li><div onClick={this.handleMoveItem} className="btn-floating grey darken-3"><i id="down" className="material-icons">arrow_downward</i></div></li>
+        var up = <li><div onClick={this.handleMoveItem} className="btn-floating black"><i id="up" className="material-icons">arrow_upward</i></div></li>
+        var down = <li><div onClick={this.handleMoveItem} className="btn-floating grey darken-4"><i id="down" className="material-icons">arrow_downward</i></div></li>
         if(todoList.items[0].id === item.id) {
-            up = <li><div onClick={this.handleMoveItem} className="btn-floating grey darken-3 disabled"><i id="up" className="material-icons">arrow_upward</i></div></li>
+            up = <li><div onClick={this.handleMoveItem} className="btn-floating grey darken-5 disabled"><i id="up" className="material-icons">arrow_upward</i></div></li>
         }
         if(todoList.items[todoList.items.length-1].id === item.id ) {
-            down = <li><div onClick={this.handleMoveItem} className="btn-floating grey darken-3 disabled"><i id="down" className="material-icons">arrow_downward</i></div></li>
+            down = <li><div onClick={this.handleMoveItem} className="btn-floating grey darken-4 disabled"><i id="down" className="material-icons">arrow_downward</i></div></li>
         }
         return (
             <div id="todo-item-link" className="card z-depth-1 todo-list-link teal lighten-5 hoverable">
@@ -40,10 +44,8 @@ class ItemCard extends React.Component {
                     </div>
                     <div className="col s2 field">{item.due_date}</div>
                     {compl}
-                    <div className="col s4" 
-                        onMouseOver={(e)=> {e.stopPropagation();e.preventDefault()}}
-                        onClick={(e)=> {e.stopPropagation();e.preventDefault()}}>
-                        <div className="fixed-action-btn FAB">
+                    <div className="col s4 row">
+                        <div className="fixed-action-btn FAB col s3 offset-s9">
                             <div className="btn-floating btn-large green accent-3">
                                 <i className="large material-icons">menu</i>
                             </div>
