@@ -2,12 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { deleteItemHandler, moveItemHandler } from '../../store/database/asynchHandler'
-
 class ItemCard extends React.Component {
+
+    componentDidMount() {
+        var elems = document.querySelectorAll('.fixed-action-btn');
+        window.M.FloatingActionButton.init(elems, {
+            direction: 'left'
+        });
+    }
 
     handleMoveItem = (e) => {
         e.stopPropagation()
         e.preventDefault()
+
+        
         const { id } = e.target
         const { item, todoList } = this.props
         this.props.handleMoveItem(todoList, item, id);

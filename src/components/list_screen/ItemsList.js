@@ -58,7 +58,8 @@ export const comp = (order) => (item1, item2) => {
 class ItemsList extends React.Component {
 
     render() {
-        const { todoList, order } = this.props;
+        const { todoList } = this.props;
+        // const { order } = this.props;
         const items = todoList.items;
         //if(order !== '') { items.sort(comp(order)); }
         items.map(item => ( item.id = item.key ))

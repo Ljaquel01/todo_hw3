@@ -25,10 +25,6 @@ class ListScreen extends Component {
         if(this.props.todoList) { this.props.updateTime(this.props.todoList) }
         var elems1 = document.querySelectorAll(".modal");
         window.M.Modal.init(elems1);
-        var elems = document.querySelectorAll('.fixed-action-btn');
-        window.M.FloatingActionButton.init(elems, {
-            direction: 'left'
-        });
     }
 
     handleChange = (e) => {

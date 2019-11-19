@@ -205,15 +205,16 @@ export const moveItemHandler = (todoList, item, name) => (dispatch, getState, { 
   }
   else {
     dest = index+1;
-    [items[index], items[dest]] = [items[dest], items[index]]
+    [items[dest], items[index]] = [items[index], items[dest]]
   }
   const firestore = getFirestore();
   firestore.collection('todoLists').doc(todoList.id).update({items: items})
   .then(() => {
-    firestore.collection('todoLists').doc(todoList.id).update({ order: "" })
-    .then(() => {
-      dispatch(actionCreators.moveItem(item))
-    })
+    dispatch(actionCreators.moveItem(item))
+    //firestore.collection('todoLists').doc(todoList.id).update({ order: todoList.order })
+    //.then(() => {
+    //  dispatch(actionCreators.moveItem(item))
+    //})
   })
 }
 
